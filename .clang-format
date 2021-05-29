@@ -1,0 +1,10 @@
+# Configuration file for clang-format (C++ formatter).
+# See <https://clang.llvm.org/docs/ClangFormatStyleOptions.html>
+
+Language: Cpp
+
+UseTab: ForIndentation
+TabWidth: 4
+
+# Style: `if (cond) {`
+BreakBeforeBraces: Attach
