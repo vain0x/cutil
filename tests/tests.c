@@ -37,8 +37,9 @@ static void la_free(RawMemory mem) {
 	}
 }
 
-static RawMemory la_reallocate(RawMemory mem, size_t new_capacity,
-                               size_t element_size) {
+static RawMemory la_reallocate(RawMemory mem, size_t new_capacity) {
+	size_t element_size = mem.element_size;
+
 	if (new_capacity == 0) {
 		la_free(mem);
 		return (RawMemory){
@@ -162,6 +163,7 @@ static int test_finish(void) {
 		return 1;
 	}
 
+	// cyan
 	fprintf(stderr, "[\x1B[36mINFO\x1B[0m] test: OK\n       test: total %zu\n",
 	        total_count);
 	return 0;
@@ -171,9 +173,9 @@ static int test_finish(void) {
 // Str
 // -----------------------------------------------
 
-Str C(char const *c_str) { return str_from_c_str(c_str); }
+static Str C(char const *c_str) { return str_from_c_str(c_str); }
 
-void test_str(void) {
+static void test_str(void) {
 	Str empty = str_empty();
 	assert_eq_u(str_len(empty), 0);
 	assert_that(str_is_empty(empty));
@@ -207,7 +209,7 @@ void test_str(void) {
 
 static Str as_str(String const *s) { return string_as_str(s); }
 
-void test_string(void) {
+static void test_string(void) {
 	String local_s = string_empty();
 	String *s = &local_s;
 
@@ -220,8 +222,7 @@ void test_string(void) {
 	assert_eq_i(str_compare(as_str(s), C("ab")), 0);
 
 	string_push_str(s, C("cd"), AL);
-	assert_eq_i(str_compare(as_str(s), C("abcd")),
-	0);
+	assert_eq_i(str_compare(as_str(s), C("abcd")), 0);
 }
 
 // ===============================================

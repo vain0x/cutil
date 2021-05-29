@@ -1,5 +1,7 @@
 // LICENSE: CC0-1.0 <https://github.com/vain0x/cutil/tree/main/LICENSE>
+
 // Provides type aliases.
+// This header is opt-in. (Not included in `cutil.h`.)
 
 #ifndef CUTIL_TYPEDEF_H_INCLUDED
 #define CUTIL_TYPEDEF_H_INCLUDED
@@ -21,7 +23,7 @@ typedef uint64_t u64;
 typedef size_t usize;
 
 // UTF-8 code unit.
-typedef unsigned char c8;
+typedef uint8_t c8;
 // UTF-16 code unit.
 typedef uint16_t c16;
 // UTF-32 code unit. (Unicode code point.)

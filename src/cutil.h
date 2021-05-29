@@ -13,13 +13,13 @@
 // i32
 // -----------------------------------------------
 
-int32_t i32_compare(int32_t l, int32_t r);
+int i32_compare(int32_t l, int32_t r);
 
 // -----------------------------------------------
 // usize
 // -----------------------------------------------
 
-size_t usize_compare(size_t l, size_t r);
+int usize_compare(size_t l, size_t r);
 
 size_t usize_min(size_t l, size_t r);
 
@@ -35,15 +35,16 @@ struct RawMemory raw_memory_new(size_t element_size);
 // Shrink if smaller. Extend if larger. Free if 0.
 //
 // While memory may move, contents are preserved.
-// Extended part is cleared.
+// Extended part is zero-filled.
 //
 // The result capacity is guaranteed to be larger
-// than or equal to `new_capacity`; not exact.
+// than or equal to `new_capacity`.
 void raw_memory_resize(struct RawMemory *mem, size_t new_capacity,
                        struct Allocator *al);
 
 // Grow a memory, at least exponentially.
 //
+// Capacity is already larger than or equal to `min_capacity`, do nothing.
 // Extended part is zero-filled.
 void raw_memory_grow(struct RawMemory *mem, size_t min_capacity,
                      struct Allocator *al);

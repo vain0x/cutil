@@ -32,7 +32,7 @@ static void debug_assert(bool cond) {
 // i32
 // -----------------------------------------------
 
-int32_t i32_compare(int32_t l, int32_t r) {
+int i32_compare(int32_t l, int32_t r) {
 	if (l == r) {
 		return 0;
 	}
@@ -46,7 +46,7 @@ int32_t i32_compare(int32_t l, int32_t r) {
 // usize
 // -----------------------------------------------
 
-size_t usize_compare(size_t l, size_t r) {
+int usize_compare(size_t l, size_t r) {
 	if (l == r) {
 		return 0;
 	}

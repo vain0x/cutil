@@ -9,8 +9,7 @@
 
 // Owned memory.
 //
-// This looks similar to array
-// but contents are not guaranteed to be initialized.
+// - Unlike array, contents may be uninitialized.
 struct RawMemory {
 	void *ptr;
 	size_t capacity;
@@ -21,11 +20,12 @@ struct RawMemory {
 struct Allocator {
 	// Allocate a memory for a number of items. (`calloc`)
 	//
-	// len: count of elements to allocate. Can be zero.
-	// size: size of an element in bytes. Typically `sizeof(T)`. Can be zero.
+	// capacity: count of elements to allocate. Can be zero.
+	// elment_size: size of an element in bytes. Typically `sizeof(T)`. Can be
+	// zero.
 	//
-	// return: newly-allocated memory. Contents are zeroed. Capacity is
-	// *larger than or* equal to `count`.
+	// return: newly-allocated memory. Contents are zero-filled. Capacity is
+	// larger than or equal to `capacity`.
 	//
 	// Result must be `free`-ed exactly once.
 	struct RawMemory (*allocate)(size_t capacity, size_t element_size);
@@ -35,7 +35,7 @@ struct Allocator {
 
 	// Deallocate a memory.
 	//
-	// mem: memory that is returned by this allocator's `allocate`.
+	// mem: a memory that is returned by this allocator's `allocate`.
 	void (*free)(struct RawMemory mem);
 };
 
@@ -61,14 +61,14 @@ struct Vector {
 	size_t capacity;
 };
 
-// Borrowed (not owned), read-only span of UTF-8 string.
+// Read-only span of UTF-8 string.
 //
 // Invariants:
 //
 // - Contents must be valid as UTF-8. (Not checked.)
 // - Allocation unit (pointed by `ptr`) must contain at least one NULL byte
 //    behind the span. (Not checked.) This invariant implies
-//    dereferencing `ptr` is always okay.
+//    accessing to `ptr[len]` is always okay.
 //
 // Remarks:
 //
@@ -78,12 +78,12 @@ struct Str {
 	size_t len;
 };
 
-// Owned span for UTF-8 string.
+// Owned, growable array for UTF-8 string.
 //
 // Invariants:
 //
-// - Same as str; and
-// - either `len == 0` (non-allocated) or `len < capacity && ptr[len] == '\0'`
+// - Contents must be valid as UTF-8. (Not checked.)
+// - Either `len == 0` (non-allocated) or `len < capacity && ptr[len] == '\0'`
 // (allocated).
 struct String {
 	unsigned char *ptr;
