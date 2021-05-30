@@ -91,4 +91,14 @@ struct String {
 	size_t capacity;
 };
 
+// Read-only view of unix-style path string.
+struct PathStr {
+	struct Str str;
+};
+
+// Owned, growable unix-style UTF-8 path string.
+struct PathString {
+	struct String string;
+};
+
 #endif

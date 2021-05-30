@@ -361,3 +361,76 @@ void string_append(struct String *string, struct String const *other,
 // -----------------------------------------------
 
 // find, split, etc.
+
+static bool str_occurs_at(struct Str str, size_t start, struct Str substr) {
+	return str_equals(str_slice(str, start, start + substr.len), substr);
+}
+
+static bool str_starts_with(struct Str str, struct Str prefix) {
+	return str_equals(str_take(str, prefix.len), prefix);
+}
+
+static bool str_ends_with(struct Str str, struct Str suffix) {
+	return str.len >= suffix.len &&
+	       str_equals(str_skip(str, str.len - suffix.len), suffix);
+}
+
+struct UsizeOption {
+	bool ok;
+	size_t value;
+};
+
+static struct UsizeOption str_rposition_c8(struct Str str, unsigned char c) {
+	size_t i = str.len;
+	while (i >= 1) {
+		i--;
+		if (str.ptr[i] == c) {
+			return (struct UsizeOption){.ok = true, .value = i};
+		}
+	}
+	return (struct UsizeOption){.ok = false};
+}
+
+// -----------------------------------------------
+// struct PathStr
+// -----------------------------------------------
+
+struct PathStr path_str_new(struct Str str) {
+	return (struct PathStr){.str = str};
+}
+
+// bool path_str_prev(struct PathStr path, struct PathStr *out) {
+// 	struct Str str = path.str;
+
+// 	struct StrDivision division;
+// 	if (!str_divide_back_c8(str, '/', &division)) {
+// 		return false;
+// 	}
+
+// 	str.ptr
+// };
+
+// struct PathSegments {
+// 	bool is_absolute;
+// 	struct Array segments;
+// };
+
+// struct Array path_str_split(struct PathStr str) {}
+
+// Normalize a path string syntactically.
+//
+// Transformations:
+//
+// - Coalesce redundant separators: `foo//bar` -> `foo/bar`
+// - Strip trailing separator: `foo/` -> `foo`
+// - Drop `.` segments: `./foo` -> `foo`
+// - Coalesce `..` segments: `foo/bar/..` -> `foo`
+//
+// Meaning of "syntactical normalization":
+//
+// - The result might not be normal in the sense of filesystem.
+//    Path might be inaccessible or missing.
+//    Different paths might map to the same file.
+struct PathString path_str_norm(struct PathStr path) {}
+
+struct PathSegment path_str_ancestors() {}
