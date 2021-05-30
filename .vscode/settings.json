@@ -1,7 +1,0 @@
-{
-    "files.associations": {
-        "chrono": "c",
-        "stdio.h": "c",
-        "typedef.h": "c"
-    }
-}

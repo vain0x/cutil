@@ -66,25 +66,27 @@ struct Vector {
 // Invariants:
 //
 // - Contents must be valid as UTF-8. (Not checked.)
+// - `ptr` is always valid.
 // - Allocation unit (pointed by `ptr`) must contain at least one NULL byte
 //    behind the span. (Not checked.) This invariant implies
 //    accessing to `ptr[len]` is always okay.
 //
-// Remarks:
-//
-// - For arbitrary binary data, use Vector instead.
+// Note: For arbitrary binary data, use Span instead.
 struct Str {
 	unsigned char const *ptr;
 	size_t len;
 };
 
-// Owned, growable array for UTF-8 string.
+// Growable owned array for UTF-8 string.
 //
 // Invariants:
 //
 // - Contents must be valid as UTF-8. (Not checked.)
-// - Either `len == 0` (non-allocated) or `len < capacity && ptr[len] == '\0'`
-// (allocated).
+// - `ptr` is always valid.
+// - Either `capacity == 0` (non-allocated) or `len < capacity && ptr[len] ==
+// '\0'`. (allocated).
+//
+// Note: For arbitrary binary data, use Vector instead.
 struct String {
 	unsigned char *ptr;
 	size_t len;

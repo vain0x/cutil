@@ -223,6 +223,9 @@ static void test_string(void) {
 
 	string_push_str(s, C("cd"), AL);
 	assert_eq_i(str_compare(as_str(s), C("abcd")), 0);
+
+	string_free(s, AL);
+	assert_eq_u(s->capacity, 0);
 }
 
 // ===============================================

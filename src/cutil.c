@@ -79,7 +79,8 @@ static void mem_clear(void *ptr, size_t start, size_t end,
 	dyn_assert(ptr);
 
 	if (start <= end) {
-		memset((unsigned char *)ptr + start * element_size, '\0', end - start);
+		memset((unsigned char *)ptr + start * element_size, '\0',
+		       (end - start) * element_size);
 	}
 }
 
@@ -287,7 +288,7 @@ struct String string_from_str(struct Str s, struct Allocator *al) {
 
 	struct RawMemory mem = al->allocate(s.len + 1, sizeof(unsigned char));
 	mem_copy_from(mem.ptr, s.ptr, s.len, sizeof(unsigned char));
-	((unsigned char *)mem.ptr)[s.len] = 0;
+	((unsigned char *)mem.ptr)[s.len] = '\0';
 
 	struct String string = {
 	    .ptr = mem.ptr,
