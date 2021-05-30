@@ -12,4 +12,4 @@ clean:
 
 test: ${SRCS} ${HEADERS}
 	mkdir -p target
-	${CC} ${CFLAGS} -g ${SRCS} -o target/tests && target/tests
+	${CC} ${CFLAGS} -g ${SRCS} -fsanitize=address,undefined -o target/tests && target/tests
