@@ -197,9 +197,9 @@ static void test_str(void) {
 	}
 
 	{
-		assert_eq_i(str_compare(str_slice(hello, 0, 99), hello), 0);
-		assert_eq_i(str_compare(str_slice(hello, 99, 66), empty), 0);
-		assert_eq_i(str_compare(str_slice(hello, 1, 4), C("ell")), 0);
+		assert_eq_s(str_slice(hello, 0, 99), hello);
+		assert_eq_s(str_slice(hello, 99, 66), empty);
+		assert_eq_s(str_slice(hello, 1, 4), C("ell"));
 	}
 }
 
@@ -213,16 +213,16 @@ static void test_string(void) {
 	String local_s = string_empty();
 	String *s = &local_s;
 
-	assert_eq_i(str_compare(as_str(s), C("")), 0);
+	assert_eq_s(as_str(s), C(""));
 
 	string_push_c8(s, 'a', AL);
-	assert_eq_i(str_compare(as_str(s), C("a")), 0);
+	assert_eq_s(as_str(s), C("a"));
 
 	string_push_c8(s, 'b', AL);
-	assert_eq_i(str_compare(as_str(s), C("ab")), 0);
+	assert_eq_s(as_str(s), C("ab"));
 
 	string_push_str(s, C("cd"), AL);
-	assert_eq_i(str_compare(as_str(s), C("abcd")), 0);
+	assert_eq_s(as_str(s), C("abcd"));
 
 	string_free(s, AL);
 	assert_eq_u(s->capacity, 0);
